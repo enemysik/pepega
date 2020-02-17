@@ -1,27 +1,14 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import Layout from './components/layout/layout';
+import { Layout } from './components/layout/layout';
+import Login from './pages/login/login';
 
-export default class App extends React.Component {
+export class App extends React.Component {
   render(): JSX.Element {
     return (<Layout>
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit that code <code>src/App.tsx</code> and save to reload.
-        </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-        </a>
-        </header>
-      </div>
+      <Login />
     </Layout>)
   }
 }
+
+export default App;
