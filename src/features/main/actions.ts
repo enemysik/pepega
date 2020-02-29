@@ -20,3 +20,5 @@ export function fetchGlobalTree() {
 
 export const setSelectedGlobalTreeNode = createAction<number>('setSelectedGlobalTreeNode');
 export const clearSelectedGlobalTreeNode = createAction('clearSelectedGlobalTreeNode');
+
+export const createNewWork = createAction('createNewWork');

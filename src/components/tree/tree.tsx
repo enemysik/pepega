@@ -13,9 +13,8 @@ export default class Tree extends React.Component<ITreeProps> {
         id={node.id}
         key={node.name}
         label={node.name}
-        setSelectedNode={this.setSelectedNode}
-        hasChildren={node.children.length > 0}
-        checked={Boolean(node.checked)}>{this.generateTree(node.children)}</Node>;
+        clicked={this.setSelectedNode}
+        checked={this.props.selectedNodeId === node.id}>{this.generateTree(node.children)}</Node>;
     });
   }
   render() {
@@ -31,5 +30,6 @@ export interface ITreeNode {
 interface ITreeProps {
   tree: ITreeNode[]
   setSelectedNode: (id: number) => void;
+  selectedNodeId: number;
 
 }

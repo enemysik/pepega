@@ -7,7 +7,7 @@ export class Layout extends React.Component<ILayoutProps> {
     return (
       <div className="d-flex flex-column">
         <Header links={this.props.links} />
-        <main className="container">{this.props.children}</main>
+        <main className="container-fluid">{this.props.children}</main>
         <Footer />
       </div>
     );
