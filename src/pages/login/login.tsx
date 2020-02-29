@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '../../reducers';
-import { loginFetchUsers, loginLogin, loginSetSelectedLogin } from '../../actions/login';
+import { loginFetchUsers, loginLogin, selectLogin } from '../../features/login';
+import { Redirect } from 'react-router-dom';
 
 export class Login extends React.Component<ILoginProps, ILoginState> {
   constructor(props: ILoginProps) {
@@ -25,7 +26,8 @@ export class Login extends React.Component<ILoginProps, ILoginState> {
     this.setState({ password: e.target.value });
   }
   render(): JSX.Element {
-    const error = this.props.loginError != '' ?
+    if (this.props.isAuthenticated) return <Redirect to="/" />
+    const error = this.props.loginError ?
       <div className="alert alert-danger">{this.props.loginError}</div>
       : null;
     return (
@@ -52,13 +54,13 @@ export class Login extends React.Component<ILoginProps, ILoginState> {
 const mapState = (state: RootState) => ({
   logins: state.logins,
   selectedLogin: state.selectedLogin,
-  loginError: state.loginError
+  loginError: state.loginError,
+  isAuthenticated: state.authentication.isAuthenticated
 });
-/* istanbul ignore next */
 const mapDispatch = (dispatch: any) => ({
-  fetchData: dispatch(loginFetchUsers()),
+  fetchData: () => dispatch(loginFetchUsers()),
   signIn: (userId: number, password: string) => dispatch(loginLogin(userId, password)),
-  setSelectedLogin: (userId: number) => dispatch(loginSetSelectedLogin(userId)),
+  setSelectedLogin: (userId: number) => dispatch(selectLogin(userId)),
 });
 
 const connector = connect(mapState, mapDispatch);
