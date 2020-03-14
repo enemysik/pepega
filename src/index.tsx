@@ -8,6 +8,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import rootReducer from './reducers';
 import configureStore from './store/configureStore';
+import './polyfills';
 
 const store = configureStore();
 // const store = createStore(rootReducer);
