@@ -1,11 +1,12 @@
 import { createReducer, combineReducers } from '@reduxjs/toolkit';
-import { IWork } from '../../models/work';
+import { IWork, IWorks } from '../../models/work';
 import { ITreeNode } from '../../components/tree/tree';
 import {
   fetchGlobalTreeSucceed,
   setSelectedGlobalTreeNode,
   setSelectedDate,
-  fetchDateWorksSucceed
+  fetchDateWorksSucceed,
+  updateWork
 } from './actions';
 
 const globalTreeReducer = createReducer<ITreeNode[]>([], builder =>
@@ -20,9 +21,10 @@ const selectedDateReducer = createReducer<Date>(new Date(), builder =>
   builder
     .addCase(setSelectedDate, (state, action) => action.payload)
 );
-const worksReducer = createReducer<IWork[]>([], builder =>
+const worksReducer = createReducer<IWorks>({}, builder =>
   builder
     .addCase(fetchDateWorksSucceed, (state, action) => action.payload)
+    .addCase(updateWork, (state, action) => ({ ...state, [action.payload.id]: action.payload }))
 );
 export default combineReducers({
   globalTree: globalTreeReducer,

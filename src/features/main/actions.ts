@@ -1,6 +1,6 @@
 import { createAction } from '@reduxjs/toolkit';
 import { ITreeNode } from '../../components/tree/tree'
-import { IWork } from '../../models/work';
+import { IWork, IWorks } from '../../models/work';
 import { AppDispatch } from '../../store/configureStore';
 
 export interface Node {
@@ -34,7 +34,7 @@ export const clearSelectedGlobalTreeNode = createAction('clearSelectedGlobalTree
 export const createNewWork = createAction('createNewWork');
 export const setSelectedDate = createAction<Date>('setSelectedDate');
 
-export const fetchDateWorksSucceed = createAction<IWork[]>('fetchDateWorksSucceed');
+export const fetchDateWorksSucceed = createAction<IWorks>('fetchDateWorksSucceed');
 export const fetchDateWorksFailed = createAction<string | null>('fetchDateWorksFailed');
 export function fetchDateWorks(date: Date) {
   return async function (dispatch: AppDispatch) {
@@ -45,7 +45,33 @@ export function fetchDateWorks(date: Date) {
       dispatch(fetchDateWorksFailed(ex.message));
     }
     if (response) {
-      dispatch(fetchDateWorksSucceed(response));
+      dispatch(fetchDateWorksSucceed(response.toObject('id')));
     }
   }
 }
+
+// #region Work
+export const updateWork = createAction<IWork>('updateWorkFailed');
+export const updateWorkRemoteSucceed = createAction('updateWorkRemoteSucceed');
+export const updateWorkRemoteFailed = createAction<string | null>('updateWorkRemoteFailed');
+export function updateWorkRemote(work: IWork) {
+  return async function (dispatch: AppDispatch) {
+    let success = false;
+    try {
+      await fetch(`/works/${work.id}`, {
+        method: 'put',
+        body: JSON.stringify(work),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      success = true;
+    } catch (ex) {
+      dispatch(updateWorkRemoteFailed(ex.message));
+    }
+    if (success) {
+      dispatch(updateWorkRemoteSucceed());
+    }
+  }
+}
+// #endregion

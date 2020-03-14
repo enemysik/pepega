@@ -5,7 +5,9 @@ import {
   clearSelectedGlobalTreeNode,
   createNewWork,
   setSelectedDate,
-  fetchDateWorks
+  fetchDateWorks,
+  updateWorkRemote,
+  updateWork
 } from '../../features/main/actions';
 import { RootState } from '../../reducers';
 import { connect, ConnectedProps } from 'react-redux';
@@ -19,7 +21,13 @@ export class MainPage extends React.Component<IMainPageProps> {
     this.props.fetchDateWorks(this.props.selectedDate);
   }
   render(): JSX.Element {
-    const works = this.props.works.map(w => <Work key={w.id} work={w} />)
+    const works = Object.values(this.props.works).map(w =>
+      <Work
+        key={w.id}
+        work={w}
+        onWorkChange={(w) => this.props.updateWork(w)}
+        onWorkChangeRemote={(w) => this.props.updateWorkRemote(w)}
+      />)
     return (<main className="row">
       <div className="col-md-6">
         <header>
@@ -40,6 +48,7 @@ const mapState = (state: RootState) => ({
   selectedNodeId: state.main.globalTreeSelectedNodeId,
   selectedDate: state.main.selectedDate,
   works: state.main.works,
+
 });
 const mapDispatch = {
   fetchGlobalTree,
@@ -47,7 +56,9 @@ const mapDispatch = {
   clearSelectedGlobalTreeNode,
   createNewWork,
   setSelectedDate,
-  fetchDateWorks
+  fetchDateWorks,
+  updateWorkRemote,
+  updateWork
 };
 const connector = connect(mapState, mapDispatch);
 type IMainPageProps = ConnectedProps<typeof connector>;

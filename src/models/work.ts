@@ -4,10 +4,13 @@ export interface IWork {
   taskId: number;
   startTime: string;
   description: string | null;
-  times: Time[];
+  times: IWorkTime[];
 }
-export interface Time {
+export interface IWorkTime {
   id: number;
   startTime: string;
   endTime: string;
+}
+export interface IWorks {
+  [id: string]: IWork;
 }
