@@ -12,6 +12,7 @@ type Props = {
   onWorkChangeRemote: (work: IWork) => void;
   onDelete: () => void;
   onDeleteTime: (timeRangeId: number) => void;
+  onTimeCreate: () => void;
 }
 export class Work extends Component<Props> {
   render(): ReactNode {
@@ -31,6 +32,7 @@ export class Work extends Component<Props> {
             value={work.name}
           />
           <button className="btn btn-outline-danger" onClick={() => this.props.onDelete()}>Delete</button>
+          <button className="btn btn-outline-success" onClick={() => this.props.onTimeCreate()}>Add time</button>
         </div>
         <div className="card-body">
           <Textarea

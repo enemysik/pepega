@@ -142,4 +142,37 @@ export function deleteTimeRangeRemote(workId: number, timeId: number) {
   }
 }
 // #endregion
+// #region create
+type CreateTimeRangeType<T> = { workId: number, time: T }
+export const createTimeRange = createAction('createTimeRange',
+  ({ workId, time }: CreateTimeRangeType<IWorkTime>) => ({
+    payload: {
+      workId,
+      time
+    }
+  }));
+export const createTimeRangeRemoteSucceed = createAction<{ workId: number, timeId: number }>('createTimeRangeRemoteSucceed');
+export const createTimeRangeRemoteFailed = createAction<string | null>('createTimeRangeRemoteFailed');
+export function createTimeRangeRemote({ workId, time }: CreateTimeRangeType<string>) {
+  return async function (dispatch: AppDispatch) {
+    let response: { id: number } | undefined;
+    const timeRange = { id: 0, startTime: time, endTime: time }
+    dispatch(createTimeRange({ workId, time: timeRange }));
+    try {
+      response = await fetch(`/works/${workId}/time`, {
+        method: 'post',
+        body: JSON.stringify(timeRange),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then(r => r.json());
+    } catch (ex) {
+      dispatch(createTimeRangeRemoteFailed(ex.message));
+    }
+    if (response) {
+      dispatch(createTimeRangeRemoteSucceed({ workId, timeId: response.id }));
+    }
+  }
+}
+// #endregion
 // #endregion

@@ -11,6 +11,7 @@ import {
   createNewWorkRemote,
   deleteWorkRemote,
   deleteTimeRangeRemote,
+  createTimeRangeRemote,
 } from '../../features/main/actions';
 import { RootState } from '../../reducers';
 import { connect, ConnectedProps } from 'react-redux';
@@ -34,6 +35,10 @@ export class MainPage extends React.Component<IMainPageProps> {
           onDelete={() => this.props.deleteWorkRemote(w.id)}
           onWorkChangeRemote={(w) => w.id === 0 ? this.props.createNewWorkRemote(w) : this.props.updateWorkRemote(w)}
           onDeleteTime={(tId) => this.props.deleteTimeRangeRemote(w.id, tId)}
+          onTimeCreate={() => this.props.createTimeRangeRemote({
+            workId: w.id,
+            time: this.props.selectedDate.toJSON()
+          })}
         />)
     return (<main className="row">
       <div className="col-md-6">
@@ -82,7 +87,8 @@ const mapDispatch = {
   updateWork,
   createNewWorkRemote,
   deleteWorkRemote,
-  deleteTimeRangeRemote
+  deleteTimeRangeRemote,
+  createTimeRangeRemote,
 };
 const connector = connect(mapState, mapDispatch);
 type IMainPageProps = ConnectedProps<typeof connector>;

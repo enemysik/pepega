@@ -1,5 +1,5 @@
 import { createReducer, combineReducers } from '@reduxjs/toolkit';
-import { IWork, IWorks } from '../../models/work';
+import { IWorks } from '../../models/work';
 import { ITreeNode } from '../../components/tree/tree';
 import {
   fetchGlobalTreeSucceed,
@@ -10,7 +10,9 @@ import {
   createNewWork,
   createNewWorkRemoteSucceed,
   deleteWorkRemoteSucceed,
-  deleteTimeRangeRemoteSucceed
+  deleteTimeRangeRemoteSucceed,
+  createTimeRangeRemoteSucceed,
+  createTimeRange
 } from './actions';
 
 const globalTreeReducer = createReducer<ITreeNode[]>([], builder =>
@@ -49,6 +51,20 @@ const worksReducer = createReducer<IWorks>({}, builder =>
       work.id = action.payload;
       newState[work.id] = work;
       delete (newState[0])
+      return newState;
+    })
+    .addCase(createTimeRangeRemoteSucceed, (state, action) => {
+      const time = state[action.payload.workId].times.find(t => t.id === 0);
+      if (time) {
+        time.id = action.payload.timeId;
+      }
+    })
+    .addCase(createTimeRange, (state, action) => {
+      const newState = { ...state };
+      const work = { ...state[action.payload.workId] };
+      const newTimes = work.times.slice();
+      work.times = newTimes.concat(action.payload.time);
+      newState[work.id] = work;
       return newState;
     })
 );
