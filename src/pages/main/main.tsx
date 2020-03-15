@@ -33,7 +33,7 @@ export class MainPage extends React.Component<IMainPageProps> {
           work={w}
           onWorkChange={(w) => this.props.updateWork(w)}
           onDelete={() => this.props.deleteWorkRemote(w.id)}
-          onWorkChangeRemote={(w) => w.id === 0 ? this.props.createNewWorkRemote(w) : this.props.updateWorkRemote(w)}
+          onWorkChangeRemote={(w) => this.props.updateWorkRemote(w)}
           onDeleteTime={(tId) => this.props.deleteTimeRangeRemote(w.id, tId)}
           onTimeCreate={() => this.props.createTimeRangeRemote({
             workId: w.id,
@@ -44,18 +44,7 @@ export class MainPage extends React.Component<IMainPageProps> {
       <div className="col-md-6">
         <header>
           <button
-            onClick={e => this.props.createNewWork({
-              id: 0,
-              name: '',
-              description: '',
-              startDate: this.props.selectedDate.toJSON(),
-              taskId: this.props.selectedNodeId,
-              times: [{
-                id: 0,
-                startTime: this.props.selectedDate.toJSON(),
-                endTime: this.props.selectedDate.toJSON()
-              }]
-            })}
+            onClick={e => this.props.createNewWorkRemote(this.props.selectedNodeId, this.props.selectedDate.toJSON())}
             disabled={this.props.selectedNodeId === 0}
             className="btn btn-outline-success">+</button>
           {/* <button disabled={this.props.selectedNodeId === 0} className="btn btn-outline-danger">-</button> */}

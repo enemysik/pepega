@@ -79,9 +79,18 @@ export function updateWorkRemote(work: IWork) {
 export const createNewWork = createAction<IWork>('createNewWork');
 export const createNewWorkRemoteSucceed = createAction<number>('createNewWorkRemoteSucceed');
 export const createNewWorkRemoteFailed = createAction<string | null>('createNewWorkRemoteFailed');
-export function createNewWorkRemote(work: IWork) {
+export function createNewWorkRemote(taskId: number, date: string) {
   return async function (dispatch: AppDispatch) {
     let response: { id: number } | undefined;
+    const work = {
+      id: 0,
+      name: '',
+      description: '',
+      startDate: date,
+      taskId: taskId,
+      times: []
+    };
+    dispatch(createNewWork(work))
     try {
       response = await fetch(`/works`, {
         method: 'post',
