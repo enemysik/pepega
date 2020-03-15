@@ -6,7 +6,10 @@ import {
   setSelectedGlobalTreeNode,
   setSelectedDate,
   fetchDateWorksSucceed,
-  updateWork
+  updateWork,
+  createNewWork,
+  createNewWorkRemoteSucceed,
+  deleteWorkRemoteSucceed
 } from './actions';
 
 const globalTreeReducer = createReducer<ITreeNode[]>([], builder =>
@@ -25,6 +28,20 @@ const worksReducer = createReducer<IWorks>({}, builder =>
   builder
     .addCase(fetchDateWorksSucceed, (state, action) => action.payload)
     .addCase(updateWork, (state, action) => ({ ...state, [action.payload.id]: action.payload }))
+    .addCase(createNewWork, (state, action) => ({ ...state, [action.payload.id]: action.payload }))
+    .addCase(deleteWorkRemoteSucceed, (state, action) => {
+      const newState = { ...state };
+      delete (newState[action.payload])
+      return newState;
+    })
+    .addCase(createNewWorkRemoteSucceed, (state, action) => {
+      const newState = { ...state };
+      const work = { ...state[0] };
+      work.id = action.payload;
+      newState[work.id] = work;
+      delete (newState[0])
+      return newState;
+    })
 );
 export default combineReducers({
   globalTree: globalTreeReducer,

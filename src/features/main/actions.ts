@@ -31,7 +31,6 @@ export function fetchGlobalTree() {
 export const setSelectedGlobalTreeNode = createAction<number>('setSelectedGlobalTreeNode');
 export const clearSelectedGlobalTreeNode = createAction('clearSelectedGlobalTreeNode');
 
-export const createNewWork = createAction('createNewWork');
 export const setSelectedDate = createAction<Date>('setSelectedDate');
 
 export const fetchDateWorksSucceed = createAction<IWorks>('fetchDateWorksSucceed');
@@ -51,7 +50,8 @@ export function fetchDateWorks(date: Date) {
 }
 
 // #region Work
-export const updateWork = createAction<IWork>('updateWorkFailed');
+// #region update
+export const updateWork = createAction<IWork>('updateWork');
 export const updateWorkRemoteSucceed = createAction('updateWorkRemoteSucceed');
 export const updateWorkRemoteFailed = createAction<string | null>('updateWorkRemoteFailed');
 export function updateWorkRemote(work: IWork) {
@@ -74,4 +74,49 @@ export function updateWorkRemote(work: IWork) {
     }
   }
 }
+// #endregion
+// #region create
+export const createNewWork = createAction<IWork>('createNewWork');
+export const createNewWorkRemoteSucceed = createAction<number>('createNewWorkRemoteSucceed');
+export const createNewWorkRemoteFailed = createAction<string | null>('createNewWorkRemoteFailed');
+export function createNewWorkRemote(work: IWork) {
+  return async function (dispatch: AppDispatch) {
+    let response: { id: number } | undefined;
+    try {
+      response = await fetch(`/works`, {
+        method: 'post',
+        body: JSON.stringify(work),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then(r => r.json());
+    } catch (ex) {
+      dispatch(createNewWorkRemoteFailed(ex.message));
+    }
+    if (response) {
+      dispatch(createNewWorkRemoteSucceed(response.id));
+    }
+  }
+}
+// #endregion
+// #region delete
+export const deleteWorkRemoteSucceed = createAction<number>('deleteWorkRemoteSucceed');
+export const deleteWorkRemoteFailed = createAction<string | null>('deleteWorkRemoteFailed');
+export function deleteWorkRemote(workId: number) {
+  return async function (dispatch: AppDispatch) {
+    let response = false;
+    try {
+      await fetch(`/works/${workId}`, {
+        method: 'delete'
+      });
+      response = true;
+    } catch (ex) {
+      dispatch(deleteWorkRemoteFailed(ex.message));
+    }
+    if (response) {
+      dispatch(deleteWorkRemoteSucceed(workId));
+    }
+  }
+}
+// #endregion
 // #endregion

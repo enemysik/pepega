@@ -2,7 +2,7 @@ export interface IWork {
   id: number;
   name: string;
   taskId: number;
-  startTime: string;
+  startDate: string;
   description: string | null;
   times: IWorkTime[];
 }
