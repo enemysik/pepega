@@ -186,4 +186,31 @@ export function createTimeRangeRemote({workId, time}: CreateTimeRangeType<string
   };
 }
 // #endregion
+// #region update
+export const updateTimeRange = createAction('updateTimeRange',
+    ({workId, time}: CreateTimeRangeType<IWorkTime>) => ({
+      payload: {
+        workId,
+        time,
+      },
+    }));
+export const updateTimeRangeRemoteFailed = createAction<string | null>('updateTimeRangeRemoteFailed');
+export function updateTimeRangeRemote({workId, time}: CreateTimeRangeType<IWorkTime>) {
+  return async function(dispatch: AppDispatch) {
+    dispatch(updateTimeRange({workId, time}));
+    try {
+      await fetch(`/works/${workId}/time/${time.id}`, {
+        method: 'put',
+        body: JSON.stringify(time),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+    } catch (ex) {
+      dispatch(updateTimeRangeRemoteFailed(ex.message));
+    }
+  };
+}
+// #endregion
+
 // #endregion

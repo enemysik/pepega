@@ -13,6 +13,7 @@ import {
   deleteTimeRangeRemoteSucceed,
   createTimeRangeRemoteSucceed,
   createTimeRange,
+  updateTimeRange,
 } from './actions';
 
 const globalTreeReducer = createReducer<ITreeNode[]>([], (builder) =>
@@ -61,6 +62,10 @@ const worksReducer = createReducer<IWorks>({}, (builder) =>
         if (time) {
           time.id = action.payload.timeId;
         }
+      })
+      .addCase(updateTimeRange, (state, action) => {
+        const times = state[action.payload.workId].times.filter((t) => t.id !== action.payload.time.id);
+        times.push(action.payload.time);
       })
       .addCase(createTimeRange, (state, action) => {
         const newState = {...state};

@@ -1,5 +1,5 @@
 import React, {Component, ReactNode} from 'react';
-import {IWork} from '../../models/work';
+import {IWork, IWorkTime} from '../../models/work';
 import {WorkTime} from './work-time';
 import {withChangeEvent} from '../hoc/witch-change-event';
 import {fromHtml} from '../hoc/from-html';
@@ -13,6 +13,7 @@ type Props = {
   onDelete: () => void;
   onDeleteTime: (timeRangeId: number) => void;
   onTimeCreate: () => void;
+  onTimeChange: (time: IWorkTime) => void;
 }
 export class Work extends Component<Props> {
   render(): ReactNode {
@@ -47,6 +48,7 @@ export class Work extends Component<Props> {
           {work.times.map((wt) => <WorkTime
             key={wt.id}
             workTime={wt}
+            onChange={(time) => this.props.onTimeChange(time)}
             onDeleteTime={() => this.props.onDeleteTime(wt.id)}
           />)}
         </div>

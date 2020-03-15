@@ -12,6 +12,7 @@ import {
   deleteWorkRemote,
   deleteTimeRangeRemote,
   createTimeRangeRemote,
+  updateTimeRangeRemote,
 } from '../../features/main/actions';
 import {RootState} from '../../reducers';
 import {connect, ConnectedProps} from 'react-redux';
@@ -39,6 +40,7 @@ export class MainPage extends React.Component<IMainPageProps> {
               workId: w.id,
               time: this.props.selectedDate.toJSON(),
             })}
+            onTimeChange={(time) => this.props.updateTimeRangeRemote({workId: w.id, time})}
           />);
     return (<main className="row">
       <div className="col-md-6">
@@ -84,6 +86,7 @@ const mapDispatch = {
   deleteWorkRemote,
   deleteTimeRangeRemote,
   createTimeRangeRemote,
+  updateTimeRangeRemote,
 };
 const connector = connect(mapState, mapDispatch);
 type IMainPageProps = ConnectedProps<typeof connector>;
