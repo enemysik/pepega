@@ -1,6 +1,6 @@
-import { createReducer, combineReducers } from '@reduxjs/toolkit';
-import { IWorks } from '../../models/work';
-import { ITreeNode } from '../../components/tree/tree';
+import {createReducer, combineReducers} from '@reduxjs/toolkit';
+import {IWorks} from '../../models/work';
+import {ITreeNode} from '../../components/tree/tree';
 import {
   fetchGlobalTreeSucceed,
   setSelectedGlobalTreeNode,
@@ -12,70 +12,74 @@ import {
   deleteWorkRemoteSucceed,
   deleteTimeRangeRemoteSucceed,
   createTimeRangeRemoteSucceed,
-  createTimeRange
+  createTimeRange,
 } from './actions';
 
-const globalTreeReducer = createReducer<ITreeNode[]>([], builder =>
+const globalTreeReducer = createReducer<ITreeNode[]>([], (builder) =>
   builder
-    .addCase(fetchGlobalTreeSucceed, (state, action) => action.payload)
+      .addCase(fetchGlobalTreeSucceed, (state, action) => action.payload),
 );
-const globalTreeSelectedNodeIdReducer = createReducer<number>(0, builder =>
+const globalTreeSelectedNodeIdReducer = createReducer<number>(0, (builder) =>
   builder
-    .addCase(setSelectedGlobalTreeNode, (state, action) => action.payload)
+      .addCase(setSelectedGlobalTreeNode, (state, action) => action.payload),
 );
-const selectedDateReducer = createReducer<Date>(new Date(), builder =>
+const selectedDateReducer = createReducer<Date>(new Date(), (builder) =>
   builder
-    .addCase(setSelectedDate, (state, action) => action.payload)
+      .addCase(setSelectedDate, (state, action) => action.payload),
 );
-const worksReducer = createReducer<IWorks>({}, builder =>
+const worksReducer = createReducer<IWorks>({}, (builder) =>
   builder
-    .addCase(fetchDateWorksSucceed, (state, action) => action.payload)
-    .addCase(updateWork, (state, action) => ({ ...state, [action.payload.id]: action.payload }))
-    .addCase(createNewWork, (state, action) => ({ ...state, [action.payload.id]: action.payload }))
-    .addCase(deleteWorkRemoteSucceed, (state, action) => {
-      const newState = { ...state };
-      delete (newState[action.payload])
-      return newState;
-    })
-    .addCase(deleteTimeRangeRemoteSucceed, (state, action) => {
-      const newState = { ...state };
-      const work = { ...state[action.payload.workId] };
-      const newTimes = work.times.filter(t => t.id !== action.payload.timeId);
-      work.times = newTimes;
-      newState[work.id] = work;
-      return newState;
-    })
-    .addCase(createNewWorkRemoteSucceed, (state, action) => {
-      const newState = { ...state };
-      const work = { ...state[0] };
-      work.id = action.payload;
-      newState[work.id] = work;
-      delete (newState[0])
-      return newState;
-    })
-    .addCase(createTimeRangeRemoteSucceed, (state, action) => {
-      const time = state[action.payload.workId].times.find(t => t.id === 0);
-      if (time) {
-        time.id = action.payload.timeId;
-      }
-    })
-    .addCase(createTimeRange, (state, action) => {
-      const newState = { ...state };
-      const work = { ...state[action.payload.workId] };
-      const newTimes = work.times.slice();
-      work.times = newTimes.concat(action.payload.time);
-      newState[work.id] = work;
-      return newState;
-    })
+      .addCase(fetchDateWorksSucceed, (state, action) => action.payload)
+      .addCase(updateWork, (state, action) =>
+        ({...state, [action.payload.id]: action.payload}))
+      .addCase(createNewWork, (state, action) =>
+        ({...state, [action.payload.id]: action.payload}))
+      .addCase(deleteWorkRemoteSucceed, (state, action) => {
+        const newState = {...state};
+        delete (newState[action.payload]);
+        return newState;
+      })
+      .addCase(deleteTimeRangeRemoteSucceed, (state, action) => {
+        const newState = {...state};
+        const work = {...state[action.payload.workId]};
+        const newTimes = work.times
+            .filter((t) => t.id !== action.payload.timeId);
+        work.times = newTimes;
+        newState[work.id] = work;
+        return newState;
+      })
+      .addCase(createNewWorkRemoteSucceed, (state, action) => {
+        const newState = {...state};
+        const work = {...state[0]};
+        work.id = action.payload;
+        newState[work.id] = work;
+        delete (newState[0]);
+        return newState;
+      })
+      .addCase(createTimeRangeRemoteSucceed, (state, action) => {
+        const time = state[action.payload.workId].times.find((t) => t.id === 0);
+        if (time) {
+          time.id = action.payload.timeId;
+        }
+      })
+      .addCase(createTimeRange, (state, action) => {
+        const newState = {...state};
+        const work = {...state[action.payload.workId]};
+        const newTimes = work.times.slice();
+        work.times = newTimes.concat(action.payload.time);
+        newState[work.id] = work;
+        return newState;
+      }),
 );
 export default combineReducers({
   globalTree: globalTreeReducer,
   globalTreeSelectedNodeId: globalTreeSelectedNodeIdReducer,
   selectedDate: selectedDateReducer,
-  works: worksReducer
-})
+  works: worksReducer,
+});
 
-// function enumerateTree(tree: ITreeNode[], callback: (node: ITreeNode) => void) {
+// function enumerateTree(tree: ITreeNode[],
+// callback: (node: ITreeNode) => void) {
 //   tree.forEach(node => {
 //     callback(node);
 //     if (node.children) {

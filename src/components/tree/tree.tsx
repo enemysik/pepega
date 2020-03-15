@@ -8,7 +8,7 @@ export default class Tree extends React.Component<ITreeProps> {
     console.log(id);
   }
   generateTree(nodes: ITreeNode[]) {
-    return nodes.map(node => {
+    return nodes.map((node) => {
       return <Node
         id={node.id}
         key={node.name}

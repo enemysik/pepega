@@ -1,5 +1,9 @@
 {
   "cSpell.words": [
     "endregion"
-  ]
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true,
+    "source.fixAll.esllint": true
+  }
 }

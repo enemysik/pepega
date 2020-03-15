@@ -1,19 +1,20 @@
 import React from 'react';
-import { connect, ConnectedProps } from 'react-redux';
-import { RootState } from '../../reducers';
-import { loginFetchUsers, loginLogin, selectLogin } from '../../features/login';
-import { Redirect } from 'react-router-dom';
+import {connect, ConnectedProps} from 'react-redux';
+import {RootState} from '../../reducers';
+import {loginFetchUsers, loginLogin, selectLogin} from '../../features/login';
+import {Redirect} from 'react-router-dom';
 
 export class Login extends React.Component<ILoginProps, ILoginState> {
   constructor(props: ILoginProps) {
     super(props);
-    this.state = { password: '' };
+    this.state = {password: ''};
   }
   componentDidMount() {
     this.props.fetchData();
   }
   get logins() {
-    return this.props.logins.map(l => <option key={l.id} value={l.id}>{l.name}</option>);
+    return this.props.logins.map((l) =>
+      <option key={l.id} value={l.id}>{l.name}</option>);
   }
   onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,28 +24,36 @@ export class Login extends React.Component<ILoginProps, ILoginState> {
     this.props.setSelectedLogin(Number(e.target.value));
   }
   onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ password: e.target.value });
+    this.setState({password: e.target.value});
   }
   render(): JSX.Element {
-    if (this.props.isAuthenticated) return <Redirect to="/" />
+    if (this.props.isAuthenticated) return <Redirect to="/" />;
     const error = this.props.loginError ?
-      <div className="alert alert-danger">{this.props.loginError}</div>
-      : null;
+      <div className="alert alert-danger">{this.props.loginError}</div> :
+      null;
     return (
       <main>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
             <label>Пользователь: </label>
-            <select className="form-control" onChange={this.onLoginChange} value={this.props.selectedLogin}>
+            <select
+              className="form-control"
+              onChange={this.onLoginChange}
+              value={this.props.selectedLogin}>
               {this.logins}
             </select>
           </div>
           <div className="form-group">
             <label>Пароль: </label>
-            <input type="password" className="form-control" onChange={this.onPasswordChange} />
+            <input
+              type="password"
+              className="form-control"
+              onChange={this.onPasswordChange} />
           </div>
           {error}
-          <button type="submit" className="btn btn-outline-primary">Вход</button>
+          <button
+            type="submit"
+            className="btn btn-outline-primary">Вход</button>
         </form>
       </main>
     );
@@ -55,11 +64,12 @@ const mapState = (state: RootState) => ({
   logins: state.logins,
   selectedLogin: state.selectedLogin,
   loginError: state.loginError,
-  isAuthenticated: state.authentication.isAuthenticated
+  isAuthenticated: state.authentication.isAuthenticated,
 });
 const mapDispatch = (dispatch: any) => ({
   fetchData: () => dispatch(loginFetchUsers()),
-  signIn: (userId: number, password: string) => dispatch(loginLogin(userId, password)),
+  signIn: (userId: number, password: string) =>
+    dispatch(loginLogin(userId, password)),
   setSelectedLogin: (userId: number) => dispatch(selectLogin(userId)),
 });
 

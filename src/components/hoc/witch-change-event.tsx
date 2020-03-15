@@ -1,4 +1,4 @@
-import React, { ComponentType, ComponentClass, Component, ReactNode } from 'react';
+import React, {ComponentType, ComponentClass, Component, ReactNode} from 'react';
 
 type Input = JSX.IntrinsicElements['input'] | JSX.IntrinsicElements['textarea'];
 type Value = Input['value'];
@@ -10,7 +10,7 @@ export function withChangeEvent<T extends Input>(Child: ComponentType<T>): Compo
   return class WithChangeEventComponent extends Component<Props & T, State> {
     static displayName = `withChangeEvent(${Child.displayName || Child.name})`;
     focused = () => {
-      this.setState({ value: this.props.value })
+      this.setState({value: this.props.value});
     }
     blurred = () => {
       if (this.state.value !== this.props.value) {
@@ -20,13 +20,14 @@ export function withChangeEvent<T extends Input>(Child: ComponentType<T>): Compo
       }
     }
     render(): ReactNode {
+      const {valueChanged, ...props} = this.props;
       return (
         <Child
           onFocus={this.focused}
           onBlur={this.blurred}
-          {...this.props}
+          {...(props as T)}
         />
-      )
+      );
     }
-  }
+  };
 }

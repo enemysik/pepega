@@ -13,7 +13,7 @@ export class WeekTabs extends React.Component<IWeekTabsProps> {
       day: tmp.format('ddd'),
       date: tmp.toDate(),
       dateString: tmp.toDate().toLocaleDateString(),
-      active: selectedMoment.isSame(tmp, 'day')
+      active: selectedMoment.isSame(tmp, 'day'),
     });
     for (let i = 0; i < 6; i++) {
       tmp.add('day', 1);
@@ -21,21 +21,21 @@ export class WeekTabs extends React.Component<IWeekTabsProps> {
         day: tmp.format('ddd'),
         date: tmp.toDate(),
         dateString: tmp.toDate().toLocaleDateString(),
-        active: selectedMoment.isSame(tmp, 'day')
+        active: selectedMoment.isSame(tmp, 'day'),
       });
     }
-    const tabs = week.map(d => <li key={d.dateString} className="nav-item">
+    const tabs = week.map((d) => <li key={d.dateString} className="nav-item">
       <span
-        className={cn("nav-link", { 'active': d.active })}
+        className={cn('nav-link', {'active': d.active})}
         onClick={() => this.props.onSelectedDateChange(d.date)}>
         {d.day}
       </span>
-    </li>)
+    </li>);
     return (
       <ul className="nav nav-tabs">
         {tabs}
       </ul>
-    )
+    );
   }
 }
 interface IWeekTabsProps {

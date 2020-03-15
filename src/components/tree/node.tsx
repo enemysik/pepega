@@ -10,14 +10,14 @@ export default class Node extends React.Component<INodeProps, INodeState> {
     };
   }
   toggleCollapse = () => {
-    this.setState({ collapsed: !this.state.collapsed });
+    this.setState({collapsed: !this.state.collapsed});
   }
   selectNode = () => {
     this.props.clicked(this.props.id);
   }
   render() {
     const hasChildren = (this.props.children as []).length > 0;
-    const labelClass = cn({ 'caret': hasChildren }, { 'caret-down': !this.state.collapsed });
+    const labelClass = cn({'caret': hasChildren}, {'caret-down': !this.state.collapsed});
     const children = !this.state.collapsed ? <ul>{this.props.children}</ul> : null;
     return (<li>
       <span className={labelClass} onClick={this.toggleCollapse}></span>

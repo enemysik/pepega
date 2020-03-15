@@ -1,5 +1,5 @@
-import { combineReducers } from 'redux';
-import { logins, selectedLogin, loginError } from '../features/login';
+import {combineReducers} from 'redux';
+import {logins, selectedLogin, loginError} from '../features/login';
 import auth from '../features/auth/reducers';
 import main from '../features/main/reducers';
 
@@ -8,7 +8,7 @@ const rootReducer = combineReducers({
   main: main,
   selectedLogin: selectedLogin,
   loginError: loginError,
-  logins: logins
+  logins: logins,
 });
 export type RootState = ReturnType<typeof rootReducer>;
 export default rootReducer;

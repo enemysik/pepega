@@ -1,6 +1,6 @@
 import React from 'react';
-import { Footer } from './footer';
-import { Header, IHeaderProps } from './header';
+import {Footer} from './footer';
+import {Header, IHeaderProps} from './header';
 
 export class Layout extends React.Component<ILayoutProps> {
   render(): JSX.Element {

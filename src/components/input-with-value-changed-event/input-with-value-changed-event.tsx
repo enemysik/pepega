@@ -1,4 +1,4 @@
-import React, { PropsWithoutRef, PureComponent } from 'react';
+import React, {PropsWithoutRef, PureComponent} from 'react';
 
 type Value = PropsWithoutRef<JSX.IntrinsicElements['input']>['value'];
 type Props = PropsWithoutRef<JSX.IntrinsicElements['input']> & {
@@ -8,7 +8,7 @@ type State = { value: Value; }
 
 export class InputWithValueChangedEvent extends PureComponent<Props, State> {
   focused = () => {
-    this.setState({ value: this.props.value })
+    this.setState({value: this.props.value});
   }
   blurred = () => {
     if (this.state.value !== this.props.value) {
