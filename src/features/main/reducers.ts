@@ -9,7 +9,8 @@ import {
   updateWork,
   createNewWork,
   createNewWorkRemoteSucceed,
-  deleteWorkRemoteSucceed
+  deleteWorkRemoteSucceed,
+  deleteTimeRangeRemoteSucceed
 } from './actions';
 
 const globalTreeReducer = createReducer<ITreeNode[]>([], builder =>
@@ -32,6 +33,14 @@ const worksReducer = createReducer<IWorks>({}, builder =>
     .addCase(deleteWorkRemoteSucceed, (state, action) => {
       const newState = { ...state };
       delete (newState[action.payload])
+      return newState;
+    })
+    .addCase(deleteTimeRangeRemoteSucceed, (state, action) => {
+      const newState = { ...state };
+      const work = { ...state[action.payload.workId] };
+      const newTimes = work.times.filter(t => t.id !== action.payload.timeId);
+      work.times = newTimes;
+      newState[work.id] = work;
       return newState;
     })
     .addCase(createNewWorkRemoteSucceed, (state, action) => {

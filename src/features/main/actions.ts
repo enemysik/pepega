@@ -1,6 +1,6 @@
 import { createAction } from '@reduxjs/toolkit';
 import { ITreeNode } from '../../components/tree/tree'
-import { IWork, IWorks } from '../../models/work';
+import { IWork, IWorks, IWorkTime } from '../../models/work';
 import { AppDispatch } from '../../store/configureStore';
 
 export interface Node {
@@ -115,6 +115,29 @@ export function deleteWorkRemote(workId: number) {
     }
     if (response) {
       dispatch(deleteWorkRemoteSucceed(workId));
+    }
+  }
+}
+// #endregion
+// #endregion
+
+// #region time
+// #region delete
+export const deleteTimeRangeRemoteSucceed = createAction<{ workId: number, timeId: number }>('deleteTimeRangeRemoteSucceed');
+export const deleteTimeRangeRemoteFailed = createAction<string | null>('deleteTimeRangeRemoteFailed');
+export function deleteTimeRangeRemote(workId: number, timeId: number) {
+  return async function (dispatch: AppDispatch) {
+    let response = false;
+    try {
+      await fetch(`/works/${workId}/time/${timeId}`, {
+        method: 'delete'
+      });
+      response = true;
+    } catch (ex) {
+      dispatch(deleteTimeRangeRemoteFailed(ex.message));
+    }
+    if (response) {
+      dispatch(deleteTimeRangeRemoteSucceed({ workId, timeId }));
     }
   }
 }

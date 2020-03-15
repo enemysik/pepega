@@ -4,12 +4,15 @@ import { TimeInput } from '../time-input/time-input';
 
 type Props = {
   workTime: IWorkTime;
+  onDeleteTime: () => void;
 }
 export class WorkTime extends React.Component<Props> {
   render(): ReactNode {
     const { workTime } = this.props;
     return (
-      <div>
+      <div
+        style={{ backgroundColor: workTime.id === 0 ? 'grey' : 'white' }}
+      >
         <span>От </span>
         <TimeInput
           value={workTime.startTime}
@@ -20,6 +23,10 @@ export class WorkTime extends React.Component<Props> {
           value={workTime.endTime}
           style={{ width: '2.7rem' }}
         />
+        <button
+          className="btn btn-outline-danger"
+          onClick={() => this.props.onDeleteTime()}
+        >X</button>
       </div>
     )
   }

@@ -11,6 +11,7 @@ type Props = {
   onWorkChange: (work: IWork) => void;
   onWorkChangeRemote: (work: IWork) => void;
   onDelete: () => void;
+  onDeleteTime: (timeRangeId: number) => void;
 }
 export class Work extends Component<Props> {
   render(): ReactNode {
@@ -41,7 +42,11 @@ export class Work extends Component<Props> {
           />
         </div>
         <div>
-          {work.times.map(wt => <WorkTime key={wt.id} workTime={wt} />)}
+          {work.times.map(wt => <WorkTime
+            key={wt.id}
+            workTime={wt}
+            onDeleteTime={() => this.props.onDeleteTime(wt.id)}
+          />)}
         </div>
       </div>
     )
