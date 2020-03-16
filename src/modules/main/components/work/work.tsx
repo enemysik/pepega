@@ -1,8 +1,8 @@
 import React, {Component, ReactNode} from 'react';
-import {IWork, IWorkTime} from '../../models/work';
+import {IWork, IWorkTime} from '../../types';
 import {WorkTime} from './work-time';
-import {withChangeEvent} from '../hoc/witch-change-event';
-import {fromHtml} from '../hoc/from-html';
+import {withChangeEvent} from '../../../../core/hoc/witch-change-event';
+import {fromHtml} from '../../../../core/hoc/from-html';
 
 const Input = withChangeEvent(fromHtml('input'));
 const Textarea = withChangeEvent(fromHtml('textarea'));

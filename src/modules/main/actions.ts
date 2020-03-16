@@ -1,7 +1,7 @@
 import {createAction} from '@reduxjs/toolkit';
-import {ITreeNode} from '../../components/tree/tree';
-import {IWork, IWorks, IWorkTime} from '../../models/work';
-import {AppDispatch} from '../../store/configureStore';
+import {ITreeNode} from './components/tree/tree';
+import {IWork, IWorks, IWorkTime} from './types';
+import {AppDispatch} from '../../store';
 
 export interface Node {
   id: number;

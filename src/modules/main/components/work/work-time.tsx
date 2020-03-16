@@ -1,6 +1,6 @@
 import React, {ReactNode} from 'react';
-import {IWorkTime} from '../../models/work';
-import {TimeInput} from '../time-input/time-input';
+import {IWorkTime} from '../../types';
+import {TimeInput} from '../../../../core/components/time-input/time-input';
 
 type Props = {
   workTime: IWorkTime;

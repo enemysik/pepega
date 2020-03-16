@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {RootState} from '../../reducers';
-import {loginFetchUsers, loginLogin, selectLogin} from '../../features/login';
+import {loginFetchUsers, loginLogin, selectLogin} from './actions';
 import {Redirect} from 'react-router-dom';
 
 export class Login extends React.Component<ILoginProps, ILoginState> {

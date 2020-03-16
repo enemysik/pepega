@@ -1,6 +1,6 @@
 import {createReducer, combineReducers} from '@reduxjs/toolkit';
-import {IWorks} from '../../models/work';
-import {ITreeNode} from '../../components/tree/tree';
+import {IWorks} from './types';
+import {ITreeNode} from './components/tree/tree';
 import {
   fetchGlobalTreeSucceed,
   setSelectedGlobalTreeNode,

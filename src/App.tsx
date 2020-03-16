@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
-import {Layout} from './components/layout/layout';
-import {HeaderLink} from './components/layout/header';
-import Login from './pages/login/login';
-import Main from './pages/main/main';
+import {Layout} from './core/components/layout/layout';
+import {HeaderLink} from './core/components/layout/header';
+import Login from './modules/login/login';
+import Main from './modules/main/main';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 export class App extends React.Component {

@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux';
-import {logins, selectedLogin, loginError} from '../features/login';
-import auth from '../features/auth/reducers';
-import main from '../features/main/reducers';
+import {logins, selectedLogin, loginError} from './modules/login/reducers';
+import auth from './core/auth/reducers';
+import main from './modules/main/reducers';
 
 const rootReducer = combineReducers({
   authentication: auth,

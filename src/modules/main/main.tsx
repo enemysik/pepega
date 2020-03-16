@@ -13,12 +13,12 @@ import {
   deleteTimeRangeRemote,
   createTimeRangeRemote,
   updateTimeRangeRemote,
-} from '../../features/main/actions';
+} from './actions';
 import {RootState} from '../../reducers';
 import {connect, ConnectedProps} from 'react-redux';
-import Tree from '../../components/tree/tree';
-import {WeekTabs} from '../../components/week-tabs/week-tabs';
-import {Work} from '../../components/work/work';
+import Tree from './components/tree/tree';
+import {WeekTabs} from './components/week-tabs/week-tabs';
+import {Work} from './components/work/work';
 
 export class MainPage extends React.Component<IMainPageProps> {
   componentDidMount() {
