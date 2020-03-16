@@ -1,4 +1,4 @@
-import React, {PureComponent, ChangeEvent, Component, CSSProperties} from 'react';
+import React, {Component, CSSProperties} from 'react';
 // @ts-ignore
 import ReactTimeInput from 'react-time-input';
 // https://github.com/dima-bu/react-time-input

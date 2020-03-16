@@ -67,10 +67,10 @@ export class MainPage extends React.Component<IMainPageProps> {
   }
 }
 const mapState = (state: RootState) => ({
-  globalTree: state.main.globalTree,
-  selectedNodeId: state.main.globalTreeSelectedNodeId,
-  selectedDate: state.main.selectedDate,
-  works: state.main.works,
+  globalTree: state.modules.main.globalTree,
+  selectedNodeId: state.modules.main.globalTreeSelectedNodeId,
+  selectedDate: state.modules.main.selectedDate,
+  works: state.modules.main.works,
 
 });
 const mapDispatch = {

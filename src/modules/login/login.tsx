@@ -16,14 +16,14 @@ export class Login extends React.Component<ILoginProps, ILoginState> {
     return this.props.logins.map((l) =>
       <option key={l.id} value={l.id}>{l.name}</option>);
   }
-  onSubmit = (e: React.FormEvent) => {
+  onSubmit(e: React.FormEvent) {
     e.preventDefault();
     this.props.signIn(this.props.selectedLogin, this.state.password);
   }
-  onLoginChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  onLoginChange(e: React.ChangeEvent<HTMLSelectElement>) {
     this.props.setSelectedLogin(Number(e.target.value));
   }
-  onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  onPasswordChange(e: React.ChangeEvent<HTMLInputElement>) {
     this.setState({password: e.target.value});
   }
   render(): JSX.Element {
@@ -33,12 +33,12 @@ export class Login extends React.Component<ILoginProps, ILoginState> {
       null;
     return (
       <main>
-        <form onSubmit={this.onSubmit}>
+        <form onSubmit={(e) => this.onSubmit(e)}>
           <div className="form-group">
             <label>Пользователь: </label>
             <select
               className="form-control"
-              onChange={this.onLoginChange}
+              onChange={(e) => this.onLoginChange(e)}
               value={this.props.selectedLogin}>
               {this.logins}
             </select>
@@ -48,7 +48,7 @@ export class Login extends React.Component<ILoginProps, ILoginState> {
             <input
               type="password"
               className="form-control"
-              onChange={this.onPasswordChange} />
+              onChange={(e) => this.onPasswordChange(e)} />
           </div>
           {error}
           <button
@@ -61,9 +61,9 @@ export class Login extends React.Component<ILoginProps, ILoginState> {
 }
 
 const mapState = (state: RootState) => ({
-  logins: state.logins,
-  selectedLogin: state.selectedLogin,
-  loginError: state.loginError,
+  logins: state.modules.login.logins,
+  selectedLogin: state.modules.login.selectedLogin,
+  loginError: state.modules.login.loginError,
   isAuthenticated: state.authentication.isAuthenticated,
 });
 const mapDispatch = (dispatch: any) => ({

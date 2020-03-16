@@ -7,8 +7,10 @@ export const store = configureStore({
   reducer: rootReducer,
   middleware: [thunk],
   preloadedState: {
-    main: {
-      selectedDate: new Date('2020-02-11'), // TODO remove
+    modules: {
+      main: {
+        selectedDate: new Date('2020-02-11'), // TODO remove
+      },
     },
   },
 });
