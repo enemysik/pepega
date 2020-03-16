@@ -2,6 +2,15 @@ import {createAction} from '@reduxjs/toolkit';
 import {IWork, IWorks} from '../types';
 import {AppDispatch} from '../../../store';
 
+export const changeSelectedDateLocal = createAction<Date>('changeSelectedDateLocal');
+export function changeSelectedDate(date: Date) {
+  return async function(dispatch: AppDispatch) {
+    dispatch(changeSelectedDateLocal(date));
+    fetchDateWorks(date)(dispatch);
+  };
+};
+
+
 // #region get
 export const fetchDateWorksSucceed = createAction<IWorks>('fetchDateWorksSucceed');
 export const fetchDateWorksFailed = createAction<string | null>('fetchDateWorksFailed');

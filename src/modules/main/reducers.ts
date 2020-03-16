@@ -4,7 +4,6 @@ import {ITreeNode} from './components/tree/tree';
 import {
   fetchGlobalTreeSucceed,
   setSelectedGlobalTreeNode,
-  changeSelectedDate,
   fetchDateWorksSucceed,
   updateWork,
   createNewWork,
@@ -14,6 +13,7 @@ import {
   createTimeRangeRemoteSucceed,
   createTimeRange,
   updateTimeRange,
+  changeSelectedDateLocal,
 } from './actions';
 
 const globalTreeReducer = createReducer<ITreeNode[]>([], (builder) =>
@@ -26,7 +26,7 @@ const globalTreeSelectedNodeIdReducer = createReducer<number>(0, (builder) =>
 );
 const selectedDateReducer = createReducer<Date>(new Date(), (builder) =>
   builder
-      .addCase(changeSelectedDate, (state, action) => action.payload),
+      .addCase(changeSelectedDateLocal, (state, action) => action.payload),
 );
 const worksReducer = createReducer<IWorks>({}, (builder) =>
   builder
