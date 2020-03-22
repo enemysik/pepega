@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import {Layout} from './core/components/layout/layout';
-import {HeaderLink} from './core/components/layout/header';
+import {HeaderLink} from './core/components/layout/types';
 import Login from './modules/login/login';
 import Main from './modules/main/main';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';

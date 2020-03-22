@@ -1,22 +1,19 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import {HeaderLink} from './types';
 
-export class Header extends React.Component<IHeaderProps> {
-  render() {
-    const links = this.props.links?.map((l) =>
-      <li key={l.route} className="nav-item"><Link className="nav-link" to={l.route}>{l.name}</Link></li>
-    );
-    return (<nav className="navbar navbar-expand-sm bg-dark">
+export type Props = { links?: HeaderLink[] }
+
+export default function Header({links}: Props) {
+  return (
+    <nav className="navbar navbar-expand-sm bg-dark">
       <ul className="navbar-nav">
-        {links}
+        {links?.map((l) =>
+          <li key={l.route} className="nav-item">
+            <Link className="nav-link text-white" to={l.route}>{l.name}</Link>
+          </li>
+        )}
       </ul>
-    </nav>);
-  }
-}
-export interface HeaderLink {
-  route: string;
-  name: string;
-}
-export interface IHeaderProps {
-  links?: HeaderLink[]
+    </nav>
+  );
 }
