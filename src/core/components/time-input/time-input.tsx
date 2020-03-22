@@ -18,7 +18,7 @@ export class TimeInput extends Component<Props> {
     if (!this.props.onChange) return;
     const [hours, minutes] = time.split(':');
     const now = new Date();
-    const date = new Date(now.getFullYear(), now.getMonth(), now.getDate(), +hours - 7, +minutes);
+    const date = new Date(now.getFullYear(), now.getMonth(), now.getDate(), +hours + 7, +minutes);
     this.props.onChange(date);
   }
   _convertToTime(value: Props['value']) {
