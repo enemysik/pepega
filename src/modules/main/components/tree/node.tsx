@@ -6,10 +6,11 @@ export default class Node extends React.Component<INodeProps, INodeState> {
   constructor(props: INodeProps) {
     super(props);
     this.state = {
-      collapsed: true,
+      collapsed: this.props.collapsed,
     };
   }
   toggleCollapse = () => {
+    this.props.onCollapseChange(this.state.collapsed);
     this.setState({collapsed: !this.state.collapsed});
   }
   selectNode = () => {
@@ -32,6 +33,8 @@ interface INodeProps {
   id: number;
   checked: boolean;
   clicked: (id: number) => void;
+  onCollapseChange: (value: boolean) => void;
+  collapsed: boolean;
 }
 interface INodeState {
   collapsed: boolean;

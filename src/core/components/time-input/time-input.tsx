@@ -8,6 +8,7 @@ type Props = {
   onChange?: (time: Date) => void;
   className?: string;
 }
+/* eslint-disable-next-line new-cap */
 const formatter = Intl.DateTimeFormat('ru', {hour: 'numeric', minute: 'numeric', timeZone: 'UTC'});
 
 export class TimeInput extends Component<Props> {
