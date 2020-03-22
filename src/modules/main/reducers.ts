@@ -66,6 +66,7 @@ const worksReducer = createReducer<IWorks>({}, (builder) =>
       .addCase(updateTimeRange, (state, action) => {
         const times = state[action.payload.workId].times.filter((t) => t.id !== action.payload.time.id);
         times.push(action.payload.time);
+        state[action.payload.workId].times = times;
       })
       .addCase(createTimeRange, (state, action) => {
         const newState = {...state};

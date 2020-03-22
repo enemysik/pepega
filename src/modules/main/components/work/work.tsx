@@ -45,7 +45,7 @@ export class Work extends Component<Props> {
           />
         </div>
         <div>
-          {work.times.map((wt) => <WorkTime
+          {work.times.slice().sort((a, b) => a.id - b.id).map((wt) => <WorkTime
             key={wt.id}
             workTime={wt}
             onChange={(time) => this.props.onTimeChange(time)}

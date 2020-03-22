@@ -24,7 +24,7 @@ export function buildDays(date: Date): IDay[] {
     active: selectedMoment.isSame(tmp, 'day'),
   });
   for (let i = 0; i < 6; i++) {
-    tmp.add('day', 1);
+    tmp.add(1, 'day');
     week.push({
       day: tmp.format('ddd'),
       date: tmp.toDate(),
