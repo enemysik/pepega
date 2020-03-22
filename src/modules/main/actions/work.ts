@@ -1,6 +1,7 @@
 import {createAction} from '@reduxjs/toolkit';
 import {IWork, IWorks} from '../types';
 import {AppDispatch} from '../../../store';
+import {setIsSaving} from '../../../core/actions';
 
 export const changeSelectedDateLocal = createAction<Date>('changeSelectedDateLocal');
 export function changeSelectedDate(date: Date) {
@@ -36,6 +37,7 @@ export function updateWorkRemote(work: IWork) {
   return async function(dispatch: AppDispatch) {
     let success = false;
     try {
+      dispatch(setIsSaving(true));
       await fetch(`/works/${work.id}`, {
         method: 'put',
         body: JSON.stringify(work),
@@ -47,6 +49,7 @@ export function updateWorkRemote(work: IWork) {
     } catch (ex) {
       dispatch(updateWorkRemoteFailed(ex.message));
     }
+    dispatch(setIsSaving(false));
     if (success) {
       dispatch(updateWorkRemoteSucceed());
     }
@@ -70,6 +73,7 @@ export function createNewWorkRemote(taskId: number, date: string) {
     };
     dispatch(createNewWork(work));
     try {
+      dispatch(setIsSaving(true));
       response = await fetch(`/works`, {
         method: 'post',
         body: JSON.stringify(work),
@@ -80,6 +84,7 @@ export function createNewWorkRemote(taskId: number, date: string) {
     } catch (ex) {
       dispatch(createNewWorkRemoteFailed(ex.message));
     }
+    dispatch(setIsSaving(false));
     if (response) {
       dispatch(createNewWorkRemoteSucceed(response.id));
     }
@@ -93,6 +98,7 @@ export function deleteWorkRemote(workId: number) {
   return async function(dispatch: AppDispatch) {
     let response = false;
     try {
+      dispatch(setIsSaving(true));
       await fetch(`/works/${workId}`, {
         method: 'delete',
       });
@@ -100,6 +106,7 @@ export function deleteWorkRemote(workId: number) {
     } catch (ex) {
       dispatch(deleteWorkRemoteFailed(ex.message));
     }
+    dispatch(setIsSaving(false));
     if (response) {
       dispatch(deleteWorkRemoteSucceed(workId));
     }

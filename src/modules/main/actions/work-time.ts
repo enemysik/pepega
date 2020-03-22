@@ -1,6 +1,7 @@
 import {createAction} from '@reduxjs/toolkit';
 import {IWorkTime} from '../types';
 import {AppDispatch} from '../../../store';
+import {setIsSaving} from '../../../core/actions';
 
 // #region delete
 export const deleteTimeRangeRemoteSucceed =
@@ -41,6 +42,7 @@ export function createTimeRangeRemote({workId, time}: CreateTimeRangeType<string
     const timeRange = {id: 0, startTime: time, endTime: time};
     dispatch(createTimeRange({workId, time: timeRange}));
     try {
+      dispatch(setIsSaving(true));
       response = await fetch(`/works/${workId}/time`, {
         method: 'post',
         body: JSON.stringify(timeRange),
@@ -51,6 +53,7 @@ export function createTimeRangeRemote({workId, time}: CreateTimeRangeType<string
     } catch (ex) {
       dispatch(createTimeRangeRemoteFailed(ex.message));
     }
+    dispatch(setIsSaving(false));
     if (response) {
       dispatch(createTimeRangeRemoteSucceed({workId, timeId: response.id}));
     }
@@ -70,6 +73,7 @@ export function updateTimeRangeRemote({workId, time}: CreateTimeRangeType<IWorkT
   return async function(dispatch: AppDispatch) {
     dispatch(updateTimeRange({workId, time}));
     try {
+      dispatch(setIsSaving(true));
       await fetch(`/works/${workId}/time/${time.id}`, {
         method: 'put',
         body: JSON.stringify(time),
@@ -80,6 +84,7 @@ export function updateTimeRangeRemote({workId, time}: CreateTimeRangeType<IWorkT
     } catch (ex) {
       dispatch(updateTimeRangeRemoteFailed(ex.message));
     }
+    dispatch(setIsSaving(false));
   };
 }
 // #endregion
