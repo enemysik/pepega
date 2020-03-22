@@ -1,4 +1,4 @@
-import React, {Component, CSSProperties} from 'react';
+import React, {Component} from 'react';
 // @ts-ignore
 import ReactTimeInput from 'react-time-input';
 // https://github.com/dima-bu/react-time-input
@@ -6,9 +6,9 @@ import ReactTimeInput from 'react-time-input';
 type Props = {
   value: Date | string | null;
   onChange?: (time: Date) => void;
-  style?: CSSProperties;
+  className?: string;
 }
-const formatter = Intl.DateTimeFormat('ru', {hour: 'numeric', minute: 'numeric'});
+const formatter = Intl.DateTimeFormat('ru', {hour: 'numeric', minute: 'numeric', timeZone: 'UTC'});
 
 export class TimeInput extends Component<Props> {
   shouldComponentUpdate() {
@@ -18,7 +18,7 @@ export class TimeInput extends Component<Props> {
     if (!this.props.onChange) return;
     const [hours, minutes] = time.split(':');
     const now = new Date();
-    const date = new Date(now.getFullYear(), now.getMonth(), now.getDate(), +hours, +minutes);
+    const date = new Date(now.getFullYear(), now.getMonth(), now.getDate(), +hours - 7, +minutes);
     this.props.onChange(date);
   }
   _convertToTime(value: Props['value']) {

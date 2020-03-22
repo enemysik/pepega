@@ -1,6 +1,7 @@
 import React, {ReactNode} from 'react';
 import {IWorkTime} from '../../types';
 import {TimeInput} from '../../../../core/components/time-input/time-input';
+import './work-time.css';
 
 type Props = {
   workTime: IWorkTime;
@@ -20,24 +21,32 @@ export class WorkTime extends React.Component<Props> {
     const {workTime} = this.props;
     return (
       <div
+        className="d-flex align-items-center"
         style={{backgroundColor: workTime.id === 0 ? 'grey' : 'white'}}
       >
         <span>От </span>
         <TimeInput
           onChange={(time) => this.onTimeChanged(time, 'start')}
           value={workTime.startTime}
-          style={{width: '2.7rem'}}
+          className="form-control time-input ml-1"
         />
-        <span> до </span>
-        <TimeInput
-          onChange={(time) => this.onTimeChanged(time, 'end')}
-          value={workTime.endTime}
-          style={{width: '2.7rem'}}
-        />
-        <button
-          className="btn btn-outline-danger"
-          onClick={() => this.props.onDeleteTime()}
-        >X</button>
+        <span className="ml-1"> до </span>
+        <div
+          className="input-group"
+          style={{width: 'unset'}}
+        >
+          <TimeInput
+            onChange={(time) => this.onTimeChanged(time, 'end')}
+            value={workTime.endTime}
+            className="form-control time-input ml-1"
+          />
+          <div className="input-group-append">
+            <button
+              className="btn btn-outline-danger"
+              onClick={() => this.props.onDeleteTime()}
+            >X</button>
+          </div>
+        </div>
       </div>
     );
   }
