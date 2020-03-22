@@ -13,6 +13,7 @@ import {
   updateWork,
 } from '../../actions';
 import {connect, ConnectedProps} from 'react-redux';
+import {OverlayTrigger, Tooltip} from 'react-bootstrap';
 
 const Input = withChangeEvent(fromHtml('input'));
 const Textarea = withChangeEvent(fromHtml('textarea'));
@@ -33,20 +34,30 @@ const connector = connect(mapState, mapDispatch);
 type Props = ConnectedProps<typeof connector> & {
   work: IWork;
 }
+
 export function Work({work, ...props}: Props) {
+  const buildFullWorkName = (name: string, taskId: number): string => {
+    const task = props.tasks[taskId];
+    name += task.name;
+    return task.parentId ? buildFullWorkName(name += '<-', task.parentId) : name;
+  };
   return (
     <div
       className="card"
       style={{backgroundColor: work.id === 0 ? 'grey' : 'white'}}
     >
       <div className="card-head">
-        <Input
-          className="form-control"
-          placeholder="Название"
-          onChange={(e) => props.onWorkChange({...work, name: e.currentTarget.value})}
-          valueChanged={(v) => props.onWorkChangeRemote({...work, name: v as string})}
-          value={work.name}
-        />
+        <OverlayTrigger
+          overlay={(p: any) => <Tooltip {...p}>{buildFullWorkName('', work.taskId)}</Tooltip>}
+        >
+          <Input
+            className="form-control"
+            placeholder="Название"
+            onChange={(e) => props.onWorkChange({...work, name: e.currentTarget.value})}
+            valueChanged={(v) => props.onWorkChangeRemote({...work, name: v as string})}
+            value={work.name}
+          />
+        </OverlayTrigger>
         <button className="btn btn-outline-danger" onClick={() => props.onDelete(work.id)}>Delete</button>
         <button className="btn btn-outline-success" onClick={() => props.onTimeCreate({
           workId: work.id,
