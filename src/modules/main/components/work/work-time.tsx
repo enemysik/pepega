@@ -21,7 +21,7 @@ export class WorkTime extends React.Component<Props> {
     const {workTime} = this.props;
     return (
       <div
-        className="d-flex align-items-center"
+        className="d-flex align-items-center mb-1"
         style={{backgroundColor: workTime.id === 0 ? 'grey' : 'white'}}
       >
         <span>От </span>
