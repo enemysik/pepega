@@ -1,6 +1,7 @@
 import {createAction} from '@reduxjs/toolkit';
-import {ITreeNode} from '../components/tree/tree';
 import {AppDispatch} from '../../../store';
+import {ITreeNode} from '../components/tree/types';
+import {ITask} from '../types';
 
 export interface Node {
   id: number;
@@ -10,19 +11,20 @@ export interface Node {
 export interface Tree {
   [id: number]: Node;
 }
+
+export const setTasksList = createAction<IObjectArray<ITask>>('setTasksList');
 // #region fetchGlobalTree
 export const fetchGlobalTreeSucceed = createAction<ITreeNode[]>('fetchGlobalTreeSucceed');
 export const fetchGlobalTreeFailed = createAction<string | null>('fetchGlobalTreeFailed');
 export function fetchGlobalTree() {
   return async function(dispatch: AppDispatch) {
-    let response: ITreeNode[] | undefined;
     try {
-      response = await fetch('/tree').then((res) => res.json()) as ITreeNode[];
+      const response = await fetch('/tree')
+          .then((res) => res.json()) as { globalTree: ITreeNode[], planarTree: ITask[] };
+      dispatch(setTasksList(response.planarTree.toObject('id')));
+      dispatch(fetchGlobalTreeSucceed(response.globalTree));
     } catch (ex) {
       dispatch(fetchGlobalTreeFailed(ex.message));
-    }
-    if (response) {
-      dispatch(fetchGlobalTreeSucceed(response));
     }
   };
 }

@@ -1,3 +1,8 @@
+export interface ITask {
+  id: number;
+  name: string;
+  parentId: number;
+}
 export interface IWork {
   id: number;
   name: string;
